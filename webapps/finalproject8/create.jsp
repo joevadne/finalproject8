@@ -9,10 +9,10 @@
 </jsp:useBean>
 <%
   database.connectDB();
-  database.query("select * from member;");
-  ResultSet rs = database.getRS();
   request.setCharacterEncoding("UTF-8");
   String c_id = request.getParameter("c_id");
+  database.query("select * from member where c_id = '" + c_id + "';");
+  ResultSet rs = database.getRS();
   String name = request.getParameter("name");
   String password = request.getParameter("password");
   String cellphone = request.getParameter("cellphone");
@@ -20,9 +20,14 @@
   String message="";
 
   if(c_id != null && name != null && password != null && cellphone != null&& email != null){
-    database.connectDB();
-    database.insertData(c_id,name,password,cellphone,email);
-    message="註冊成功";
+    if(rs!=null){
+      if(rs.next()){
+          message="註冊失敗,賬號已被使用";
+        }else{
+          database.insertData(c_id,name,password,cellphone,email);
+          message="註冊成功";
+        }
+      }
     }else{
     message="註冊失敗";
   }
@@ -60,4 +65,5 @@ body {
       信箱：<%=email%><br>
       <button class="btn btn-primary" onclick="window.open('index.html','_self')">確定</button>
 </BODY>
+</center>
 </HTML>

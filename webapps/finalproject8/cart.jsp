@@ -43,7 +43,7 @@
     body{
       background: none;
       background-color: black;
-      color:white;
+
       }
     </style>
     <meta charset="utf-8">
@@ -53,7 +53,8 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="margin:0">
+    <nav class="navbar navbar-inverse navbar-fixed-top" >
+
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand">All U Can Drink</a>
@@ -66,6 +67,7 @@
           <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         </ul>
       </div>
+    
     </nav>
 
     <div class="page-header" style="margin-top:0">
@@ -73,6 +75,7 @@
     </div>
 
     <div class="container-fluid">
+
       <div class="row">
 
 
@@ -84,23 +87,31 @@
             database.query(sql);
             rs = database.getRS();
             int total = 0 ;
+            int totalone = 0 ;
             if(rs!=null){
               while(rs.next()){
                 int price = rs.getInt("price");
-                total+=price;
+                int qty = rs.getInt("quantity");
+                total+=price*qty;
+                totalone=price*qty;
                 %>
-                  <li class="list-group-item" style="background-color:black;">
-                    <img class="img-responsive" style="height:200px;width:200px;" src="<%=rs.getString("image")%>"/>
-                    <p><h5 style="color:white">飲料：《<%=rs.getString("name")%>》</h5>
-                    <ul class="" style="background-color:black;text-align:right;">
-                    <span class><%=rs.getString("quantity")%>杯</span>
-                    <h5 style="color:white">價格：<%=price%>元</h4>
-                  </ul>
+                  <li class="list-group-item" style="background-color:white;">
+                    <div class="row">
+                    <div class="col-md-2"> <img class="img-responsive" style="height:200px;width:300px;" src="<%=rs.getString("image")%>"/></div>
+
+                        <div class="col-md-6"><h3><br>飲料：《<%=rs.getString("name")%>》<br><br>NT<%=price%></h3></div>
+                        <div><br></div>
+                        <div class="col-md-4" style="background-color:white;text-align:right;">
+                          <br><br><br><br>
+                          <h3><%=rs.getString("quantity")%>杯</h3>
+                          <h3>價格：<%=totalone%>元</h3>
+                        </div>
+
                 </li>
                 <%
               }%>
-              <li class="list-group-item" style="background-color:black;text-align:right;list-style-position: inside;">
-                <h3 style="color:white">Total：<span id="total"><%=total%></span></h3>
+              <li class="list-group-item" style="background-color:white;text-align:right;list-style-position: inside;">
+                <h2>Total：NT<span id="total"><%=total%></span></h2>
               </li>
             <%}
             %>
@@ -109,7 +120,7 @@
             <input type="hidden" name="pay" value="ok"/>
 
             <button type="button" style="float:right" onclick="mycartPay()" class="ui inverted violet basic button">Delete</button>
-            <button type="button" style="float:right" onclick="window.open('data.jsp','_self')" class="ui inverted purple basic button">Back</button>
+            <button type="button" style="float:right" onclick="window.open('javascript:history.back(-1)','_self')" class="ui inverted purple basic button">Back</button>
 
             <script>
               function mycartPay(){
@@ -120,8 +131,10 @@
         </div>
       </div>
     </div>
+  </div>
     <hr>
     <br>
+
   </body>
 </html>
 <%

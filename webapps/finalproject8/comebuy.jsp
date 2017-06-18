@@ -62,7 +62,7 @@ if((session.getAttribute("c_id") == null) || (session.getAttribute("c_id") == ""
               </ul>
   <div class="navbar-header">
   <!-- Collect the nav links, forms, and other content for toggling -->
-  <a class="navbar-brand" href="index.html"><img src="images/staricon.jpg" w="25" h="25"></a>
+  <a class="navbar-brand" href="index.html"><img src="images/comeicon.jpg" w="25" h="25"></a>
   <a class="navbar-brand" href="index.html">HOME</a>
 
   </div>
